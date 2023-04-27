@@ -2,9 +2,27 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 
-function Square({ value, onSquareClick }) {
+function Switch({color, isChecked, onToggle}) {
+    return (
+        <>
+            <input className="react-switch-checkbox"
+                   checked={isChecked}
+                   onChange={onToggle}
+                   id={`react-switch-new`}
+                   type="checkbox" />
+            <label style={{ background: isChecked && color }}
+                   className="react-switch-label"
+                   htmlFor={`react-switch-new`} >
+                <span className={`react-switch-button`} />
+            </label>
+        </>
+    )
+}
+
+function Square({ value, onSquareClick, highlight, color }) {
     return (
         <button className="square"
+                style={{ background: highlight && color }}
                 onClick={onSquareClick}>
             {value}
         </button>
@@ -19,17 +37,17 @@ function calculateWinner(squares) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
+            return [squares[a], lines[i]];
         }
     }
     return null;
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, currentMove }) {
     const winner = calculateWinner(squares);
     let status;
     if (winner) {
-        status = "Winner: " + winner;
+        status = "Winner: " + winner[0];
     } else {
         status = "Next player: " + (xIsNext ? "X" : "O");
     }
@@ -46,34 +64,41 @@ function Board({ xIsNext, squares, onPlay }) {
         }
         onPlay(nextSquares);
     }
+    
+    const tictacrow = [0, 1, 2].map(row => {
+        return (
+            <div className="board-row">
+                {[0, 1, 2].map(col => {
+                    const box = row * 3 + col;
+                    const highlighted = winner && winner[1].includes(box)
+                    return <Square value={squares[box]} 
+                                   onSquareClick={() => handleClick(box)} 
+                                   color="#EF476F"
+                                   highlight={highlighted} />
+                })}
+            </div>
+        );
+    });
 
     return (
         <>
             <div className="status">{status}</div>
-            <div className="board-row">
-                <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-                <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-                <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-            </div>
-            <div className="board-row">
-                <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-                <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-                <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-            </div>
-            <div className="board-row">
-                <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-                <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-                <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-            </div>
+            {tictacrow}
         </>
     );
 }
 
+
 function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [currentMove, setCurrentMove] = useState(0);
-    const xIsNext = currentMove % 2 === 0
+    const [ascending, setAscending] = useState(true);
+    const xIsNext = currentMove % 2 === 0;
     const currentSquares = history[currentMove];
+
+    function handleSwitch(){
+        setAscending(!ascending)
+    }
 
     function handlePlay(nextSquares) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -85,10 +110,29 @@ function Game() {
         setCurrentMove(nextMove);
     }
 
-    const moves = history.map((squares, move) => {
+    function getIndexChange(prevSquares, currentSquares) {
+        for (let i = 0; i < currentSquares.length; i++){
+            if (prevSquares[i] !== currentSquares[i]) {
+                return i;
+            }
+        }
+    }
+
+    const moves = history.map((squares, index) => {
+        const move = ascending ? index : history.length -1 - index;
+
         let description;
         if (move > 0) {
-            description = 'Go to move #' + move;
+            const changedIndex = getIndexChange(history[index-1], history[index])
+            const pos = [parseInt(changedIndex/3)+1, changedIndex%3+1]
+            if (move === currentMove) {
+                return (
+                    <li key={move}>
+                        <p>You are at move no. {move} ({pos[0]}, {pos[1]}).</p>
+                    </li>
+                );
+            }   
+            description = 'Go to move #' + move + ' (' + pos[0] + ', ' + pos[1] + ')';
         } else {
             description = 'Go to game start';
         }
@@ -102,9 +146,12 @@ function Game() {
     return (
         <div className="game">
             <div className="game-board">
-                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+                <Board xIsNext={xIsNext} squares={currentSquares} 
+                       onPlay={handlePlay} currentMove={currentMove} />
             </div>
             <div className="game-info">
+                <Switch color="#EF476F" isChecked={ascending} 
+                        onToggle={handleSwitch} />
                 <ol>{moves}</ol>
             </div>
         </div>
