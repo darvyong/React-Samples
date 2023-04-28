@@ -1,32 +1,7 @@
 import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-interface SwitchProps {
-    color: string;
-    isChecked: boolean;
-    onToggle: () => void;
-}
-
-function Switch({ color, isChecked, onToggle } : SwitchProps ) {
-    if (!isChecked) {
-        color = "";
-    }
-    return (
-        <>
-            <input className="react-switch-checkbox"
-                   checked={isChecked}
-                   onChange={onToggle}
-                   id={`react-switch-new`}
-                   type="checkbox" />
-            <label style={{ background: color }}
-                   className="react-switch-label"
-                   htmlFor={`react-switch-new`} >
-                <span className={`react-switch-button`} />
-            </label>
-        </>
-    )
-}
+import { FormControlLabel, Switch } from '@mui/material';
 
 interface SquareProps { 
     value: string;
@@ -189,8 +164,10 @@ function Game() {
                        onPlay={handlePlay} currentIndex={currentIndex}/>
             </div>
             <div className="game-info">
-                <Switch color="#EF476F" isChecked={ascending} 
-                        onToggle={handleSwitch} />
+                <FormControlLabel label="Ascending Order"
+                    control={<Switch color="secondary" 
+                                    checked={ascending}
+                                    onChange={handleSwitch}/>} />
                 <ol>{moves}</ol>
             </div>
         </div>
