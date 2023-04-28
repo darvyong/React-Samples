@@ -144,22 +144,23 @@ function Game() {
     }
 
     function getIndexChange(prevSquares: string[], currentSquares: string[]) {
+        let index: number = -1;
         for (let i = 0; i < currentSquares.length; i++){
             if (prevSquares[i] !== currentSquares[i]) {
-                return i;
+                index = i;
+                break;
             }
         }
-        return -1;
+        return index;
     }
 
     const currentIndex: number = (currentMove > 0) ? getIndexChange(history[currentMove-1], history[currentMove]): -1;
 
     const moves = history.map((squares, index) => {
         const move = ascending ? index : history.length -1 - index;
-
         let description;
         if (move > 0) {
-            const changedIndex: number = getIndexChange(history[index-1], history[index])
+            const changedIndex: number = getIndexChange(history[move-1], history[move])
             const pos: number[] = [Math.floor(changedIndex/3)+1, changedIndex%3+1]
             if (move === currentMove) {
                 return (
