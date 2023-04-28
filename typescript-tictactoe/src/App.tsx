@@ -93,7 +93,8 @@ function Board({ xIsNext, squares, onPlay, currentIndex } : BoardProps) {
     
     const tictacrow = [0, 1, 2].map(row => {
         return (
-            <div className="board-row">
+            <div key={row}
+                 className="board-row">
                 {[0, 1, 2].map(col => {
                     const box: number = row * 3 + col;
                     let highlighted: boolean = false;
@@ -104,7 +105,8 @@ function Board({ xIsNext, squares, onPlay, currentIndex } : BoardProps) {
                         highlighted = true;
                         color = "#A7F542"
                     }
-                    return <Square value={squares[box]} 
+                    return <Square key={box}
+                                   value={squares[box]} 
                                    onSquareClick={() => handleClick(box)} 
                                    color={color}
                                    highlight={highlighted} />
@@ -205,9 +207,9 @@ function App() {
                     React TicTacToe App
                 </p>
             </header>
-            <body>
+            <div>
                 <Game />
-            </body>
+            </div>
         </div>
     );
 }
