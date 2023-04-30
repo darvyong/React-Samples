@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Modal from "./components/Modal";
+import { TodoItem, CustomModal, Style } from "./components/Modal";
 import axios from "axios";
 
 import { Button, ToggleButton, ToggleButtonGroup, Card, CardContent, Typography, Grid } from '@mui/material';
@@ -9,28 +9,11 @@ import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-interface todoItem {
-    id?: number,
-    title: string,
-    description: string,
-    completed: boolean,
-}
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    boxShadow: 24,
-    p: 4,
-};
-
 function App() {
-    const [todoList, setTodoList] = useState<todoItem[]>([]);
+    const [todoList, setTodoList] = useState<TodoItem[]>([]);
     const [alignment, setAlignment] = useState('complete');
     const [modal, setModal] = useState(false);
-    const [activeItem, setActiveItem] = useState<todoItem>({
+    const [activeItem, setActiveItem] = useState<TodoItem>({
         title: "", description: "", completed: false,
     });
     const viewCompleted = alignment === 'complete';
@@ -49,7 +32,7 @@ function App() {
         setModal(!modal);
     }
 
-    function handleSubmit(item: todoItem) {
+    function handleSubmit(item: TodoItem) {
         toggle();
         //alert("save" + JSON.stringify(item));
         if (item.id) {
@@ -61,7 +44,7 @@ function App() {
              .then((res) => refreshList());
     }
 
-    function handleDelete(item: todoItem) {
+    function handleDelete(item: TodoItem) {
         //alert("delete" + JSON.stringify(item));
         axios.delete(`/api/todos/${item.id}/`)
              .then((res) => refreshList());
@@ -73,7 +56,7 @@ function App() {
         setModal(!modal);
     }
 
-    function editItem(item: todoItem) {
+    function editItem(item: TodoItem) {
        setActiveItem(item);
        setModal(!modal);
     }
@@ -105,7 +88,7 @@ function App() {
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
             </header>
-            <Card className="container" sx={{ ...style, width: 800 }} >
+            <Card className="container" sx={{ ...Style, width: 800 }} >
                 <CardContent className="row">
                     <Typography gutterBottom variant='h4' component='h1' sx={{fontWeight: 'bold'}}>
                         Todo List
@@ -130,7 +113,7 @@ function App() {
                 </CardContent>
             </Card>
             {modal ? (
-                <Modal activeItem={activeItem}
+                <CustomModal activeItem={activeItem}
                        modal={modal}
                        toggle={toggle}
                        onSave={handleSubmit} />

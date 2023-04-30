@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Button, Modal, TextField, Card, Typography, Checkbox } from '@mui/material';
 import { FormGroup, FormControlLabel } from '@mui/material';
 
-interface todoItem {
+export interface TodoItem {
     id?: number,
     title: string,
     description: string,
     completed: boolean,
 }
 
-const style = {
+export const Style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -19,11 +19,11 @@ const style = {
     p: 4,
 };
 
-function CustomModal({activeItem, modal, toggle, onSave} : {
-    activeItem: todoItem;
+export function CustomModal({activeItem, modal, toggle, onSave} : {
+    activeItem: TodoItem;
     modal: boolean;
     toggle: () => void;
-    onSave: (item: todoItem) => void;
+    onSave: (item: TodoItem) => void;
 }) {
     const [modalItem, setModalItem] = useState(activeItem);
 
@@ -38,7 +38,7 @@ function CustomModal({activeItem, modal, toggle, onSave} : {
 
     return (
         <Modal open={modal} onClose={toggle}>
-            <Card sx={style}>
+            <Card sx={Style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Todo Item
                 </Typography>
@@ -67,6 +67,5 @@ function CustomModal({activeItem, modal, toggle, onSave} : {
         </Modal>
     );
 }
-
 
 export default CustomModal;
