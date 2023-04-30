@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Modal, TextField, Card, Typography, Checkbox } from '@mui/material';
 import { FormGroup, FormControlLabel } from '@mui/material';
 
@@ -15,8 +15,9 @@ export const Style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
+    borderRadius: 2,
     boxShadow: 24,
-    p: 4,
+    p: 3,
 };
 
 export function CustomModal({activeItem, modal, toggle, onSave} : {
@@ -38,7 +39,7 @@ export function CustomModal({activeItem, modal, toggle, onSave} : {
 
     return (
         <Modal open={modal} onClose={toggle}>
-            <Card sx={Style}>
+            <Card className="Card" sx={Style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Todo Item
                 </Typography>
@@ -57,7 +58,7 @@ export function CustomModal({activeItem, modal, toggle, onSave} : {
                                                     checked={modalItem.completed} 
                                                     onChange={handleChange} />} 
                                         label="Completed" 
-                                        sx={{ marginY: 1}} />
+                                        sx={{ marginBottom: 1}} />
                 </FormGroup>
                 <Button color="success" variant="contained"
                     onClick={() => onSave(modalItem)} >

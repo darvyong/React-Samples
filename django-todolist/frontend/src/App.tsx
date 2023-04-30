@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { TodoItem, CustomModal, Style } from "./components/Modal";
+import { useEffect, useState, MouseEvent } from 'react';
 import axios from "axios";
 
-import { Button, ToggleButton, ToggleButtonGroup, Card, CardContent, Typography, Grid } from '@mui/material';
+import './App.css';
+import { TodoItem, CustomModal, Style } from "./components/Modal";
+import { Button, ToggleButton, ToggleButtonGroup, Card, CardContent, Typography, Grid, Box } from '@mui/material';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -61,10 +60,10 @@ function App() {
        setModal(!modal);
     }
 
-    const handleChange = (
-        event: React.MouseEvent<HTMLElement>,
+    function handleChange(
+        event: MouseEvent<HTMLElement>,
         newAlignment: string,
-    ) => {
+    ) {
         setAlignment(newAlignment);
     };
 
@@ -85,26 +84,27 @@ function App() {
 
     return (
         <div className="App" >
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-            </header>
-            <Card className="container" sx={{ ...Style, width: 800 }} >
-                <CardContent className="row">
+            <header className="App-header"> TODO LIST </header>
+            <Card className="container" sx={{ ...Style, width: 500 }} >
+                <CardContent>
                     <Typography gutterBottom variant='h4' component='h1' sx={{fontWeight: 'bold'}}>
                         Todo List
                     </Typography>
                     <Grid container>
-                        <Grid item xs={2}>
-                            <Button size="small" variant="contained" color="secondary"
-                                    onClick={createItem}>Add task</Button>
+                        <Grid item xs={6}>
+                            <Box display="flex" justifyContent="flex-start">
+                                <Button size="small" variant="contained" color="secondary"
+                                        onClick={createItem}>Add task</Button>
+                            </Box>
                         </Grid>
-                        <Grid item xs={7} />
-                        <Grid item xs={2}>
-                            <ToggleButtonGroup color="primary" exclusive
-                                            value={alignment} onChange={handleChange}>
-                                <ToggleButton size="small" value="complete">Complete</ToggleButton>
-                                <ToggleButton size="small" value="incomplete">Incomplete</ToggleButton>
-                            </ToggleButtonGroup>
+                        <Grid item xs={6}>
+                            <Box display="flex" justifyContent="flex-end">
+                                <ToggleButtonGroup color="primary" exclusive
+                                                value={alignment} onChange={handleChange}>
+                                    <ToggleButton size="small" value="complete">Complete</ToggleButton>
+                                    <ToggleButton size="small" value="incomplete">Incomplete</ToggleButton>
+                                </ToggleButtonGroup>
+                            </Box>
                         </Grid>
                         <Grid item xs={12}>
                             <List>{todoListItems}</List>
