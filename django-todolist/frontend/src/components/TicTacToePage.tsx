@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormControlLabel, Switch } from '@mui/material';
+import { Button, FormControlLabel, List, ListItem, Switch } from '@mui/material';
 import './TicTacToe.css';
 
 interface SquareProps { 
@@ -14,11 +14,14 @@ function Square({ value, onSquareClick, highlight, color } : SquareProps ) {
         color = "";
     }
     return (
-        <button className="square"
+        <Button variant="outlined"
+                sx={{ width: 60, height: 60, margin: "-1px", padding: 0, float: "left",
+                      fontSize: "36px", fontWeight: "bold", background: "#F9F9F9", textAlign: "center",
+                      borderRadius: 0, border: "2px solid", borderColor: "#999999" }}
                 style={{ background: color }}
                 onClick={onSquareClick}>
             {value}
-        </button>
+        </Button>
     );
 }
 
@@ -91,8 +94,9 @@ function Board({ xIsNext, squares, onPlay, currentIndex } : BoardProps) {
 
     return (
         <>
-            <div className="status">{status}</div>
             {tictacrow}
+            <br />
+            <div className="status">{status}</div>
         </>
     );
 }
@@ -140,9 +144,9 @@ function TicTacToeGame() {
             const pos: number[] = [Math.floor(changedIndex/3)+1, changedIndex%3+1]
             if (move === currentMove) {
                 return (
-                    <li key={move}>
+                    <ListItem key={move}>
                         <p>You are at move no. {move} ({pos[0]}, {pos[1]}).</p>
-                    </li>
+                    </ListItem>
                 );
             }   
             description = 'Go to move #' + move + ' (' + pos[0] + ', ' + pos[1] + ')';
@@ -150,9 +154,9 @@ function TicTacToeGame() {
             description = 'Go to game start';
         }
         return (
-            <li key={move}>
-                <button onClick={() => jumpTo(move)}>{description}</button>
-            </li>
+            <ListItem key={move} >
+                <Button variant='outlined' onClick={() => jumpTo(move)}>{description}</Button>
+            </ListItem>
         );
     });
 
@@ -167,7 +171,7 @@ function TicTacToeGame() {
                     control={<Switch color="secondary" 
                                     checked={ascending}
                                     onChange={handleSwitch}/>} />
-                <ol>{moves}</ol>
+                <List dense={true} >{moves}</List>
             </div>
         </div>
     );
