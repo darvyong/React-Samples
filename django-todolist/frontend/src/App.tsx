@@ -7,6 +7,7 @@ import Home from './components/HomePage';
 import TodoList from './components/TodoListPage';
 import TicTacToeGame from './components/TicTacToePage';
 import Sample from './components/SamplePage';
+import Products from './components/Products';
 
 function App() {
     const chooseRoute = (
@@ -14,6 +15,7 @@ function App() {
                 <Route path='/' element={<Home/>} />
                 <Route path='/todolist' element={<TodoList/>} />
                 <Route path='/tictactoe' element={<TicTacToeGame/>} />
+                <Route path='/products' element={<Products/>} />
                 <Route path='/samples' element={<Sample/>} />
             </Routes>
         )

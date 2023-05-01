@@ -10,6 +10,7 @@ import ChecklistIcon from '@mui/icons-material/Checklist';
 import HomeIcon from "@mui/icons-material/Home";
 import GridOffIcon from '@mui/icons-material/GridOff';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { Link } from "react-router-dom";
 
@@ -20,7 +21,7 @@ const navItems = [{
     "link": "/",
     "icon": <HomeIcon />
 }, {
-    "key": "Todolist",
+    "key": "TodoList",
     "name": "Todo List",
     "link": "/todolist",
     "icon": <ChecklistIcon />
@@ -34,6 +35,11 @@ const navItems = [{
     "name": "Sample Implementations",
     "link": "/samples",
     "icon": <DesignServicesIcon />
+}, {
+    "key": "Products",
+    "name": "Product List",
+    "link": "/products",
+    "icon": <ShoppingCartIcon />
 }]
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
