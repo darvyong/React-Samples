@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Card } from '@mui/material';
+import { Alert, Button, Card, Snackbar } from '@mui/material';
 import './Sample.css';
 
 const Style = {
@@ -27,15 +27,30 @@ function Profile(){
 }
 
 function MyButton({ text } : { text: string }) {
+    const [open, setOpen] = useState(false);
+    const [count, setCount] = useState(0);
+
     function handleClick() {
-        alert("You clicked me!");
+        setCount(count + 1);
+        setOpen(true);
+    }
+
+    function handleClose() {    
+        setOpen(false);
     }
 
     return (
-        <Button variant="contained" sx={{ marginBottom: 1 }}
-                onClick={handleClick} >
-            {text}
-        </Button>
+        <div style={{ marginBottom: 10 }}>
+            <Button variant="contained" 
+                    onClick={handleClick} >
+                {text}
+            </Button>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} >
+                <Alert severity="success" sx={{ width: '100%' }}>
+                    You clicked <b>{text}</b> {count} times!
+                </Alert>
+            </Snackbar>
+        </div>
     );
 }
 
@@ -46,7 +61,6 @@ function Sample() {
         <>
             <p> This page contains implementation samples of react concepts </p>
             { !testToggle && <MyButton text="HELLO" /> }
-            <br />
             { testToggle ? ( <MyButton text="TOGGLE ON" /> ) : ( <MyButton text="TOGGLE OFF" /> ) }
             <Card sx={ Style }>
                 <Profile />
