@@ -6,25 +6,34 @@ import { CssBaseline, Box, Drawer, Toolbar, Typography, Divider } from "@mui/mat
 
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import TodayIcon from "@mui/icons-material/Today";
+import ChecklistIcon from '@mui/icons-material/Checklist';
 import HomeIcon from "@mui/icons-material/Home";
 import GridOffIcon from '@mui/icons-material/GridOff';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = [{
     "key": "Home",
+    "name": "Home",
     "link": "/",
-    "icon": <HomeIcon />,
+    "icon": <HomeIcon />
 }, {
     "key": "Todolist",
+    "name": "Todo List",
     "link": "/todolist",
-    "icon": <TodayIcon />,
+    "icon": <ChecklistIcon />
 }, {
     "key": "TicTacToe",
+    "name": "TicTacToe Game",
     "link": "/tictactoe",
-    "icon": <GridOffIcon />,
+    "icon": <GridOffIcon />
+}, {
+    "key": "Samples",
+    "name": "Sample Implementations",
+    "link": "/samples",
+    "icon": <DesignServicesIcon />
 }]
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -76,10 +85,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end"
 }));
 
+interface NavItem {
+    "key": string,
+    "name": string,
+    "link": string,
+    "icon": JSX.Element,
+}
+
 export default function PersistentDrawerLeft({ content }: {
     content: JSX.Element;
 }) {
     const [open, setOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState<NavItem>(navItems[0]);
+
+    function handleNavItemClick(item: NavItem) {
+        setCurrentPage(item);
+    }
 
     function handleDrawerToggle() {
         setOpen(!open);
@@ -98,7 +119,7 @@ export default function PersistentDrawerLeft({ content }: {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                    Darvy's React Portal
+                    { currentPage.name }
                 </Typography>
                 </Toolbar>
             </AppBar>
@@ -110,7 +131,8 @@ export default function PersistentDrawerLeft({ content }: {
                 <List>
                     {navItems.map(item => (
                         <ListItem key={item.key} disablePadding>
-                            <ListItemButton  component={Link} to={item.link} >
+                            <ListItemButton component={Link} to={item.link} 
+                                            onClick={ () => handleNavItemClick(item) }>
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
