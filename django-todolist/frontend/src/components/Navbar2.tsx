@@ -1,5 +1,5 @@
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { useState } from "react";
+import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { CssBaseline, Box, Drawer, Toolbar, Typography, Divider } from "@mui/material";
@@ -8,6 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import TodayIcon from "@mui/icons-material/Today";
 import HomeIcon from "@mui/icons-material/Home";
+import GridOffIcon from '@mui/icons-material/GridOff';
+
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -19,6 +21,10 @@ const navItems = [{
     "key": "Todolist",
     "link": "/todolist",
     "icon": <TodayIcon />,
+}, {
+    "key": "TicTacToe",
+    "link": "/tictactoe",
+    "icon": <GridOffIcon />,
 }]
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -73,7 +79,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function PersistentDrawerLeft({ content }: {
     content: JSX.Element;
 }) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     function handleDrawerToggle() {
         setOpen(!open);

@@ -16,6 +16,10 @@ const navItems = [{
         "key": "Todolist",
         "link": "/todolist",
         "icon": <TodayIcon />,
+    }, {
+        "key": "TicTacToe",
+        "link": "/tictactoe",
+        "icon": <TodayIcon />,
     }]
 
 function Navbar({window, content}: {
