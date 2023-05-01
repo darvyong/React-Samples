@@ -2,11 +2,18 @@ import { useEffect, useState, MouseEvent } from 'react';
 import axios from "axios";
 
 import './TodoList.css';
-import { TodoItem, CustomModal, Style } from "../components/TodoListModal";
+import { TodoItem, CustomModal } from "./TodoListModal";
 import { Button, ToggleButton, ToggleButtonGroup, Card, CardContent, Typography, Grid, Box } from '@mui/material';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+
+const Style = {
+    width: 1,
+    borderRadius: 2,
+    boxShadow: 8,
+    p: 0,
+};
 
 function TodoList() {
     const [todoList, setTodoList] = useState<TodoItem[]>([]);
@@ -87,9 +94,9 @@ function TodoList() {
     ));
 
     return (
-        <Card className="container" sx={{ ...Style, width: 500, p: 0 }} >
+        <Card className="container" sx={ Style } >
             <Typography variant='h5' component='h1' className='Todo-card-header'
-                        sx={{fontWeight: 'bold'}} >
+                        sx={{ fontWeight: 'bold' }} >
                 Todo List
             </Typography>
             <CardContent>

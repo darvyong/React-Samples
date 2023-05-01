@@ -9,13 +9,13 @@ export interface TodoItem {
     completed: boolean,
 }
 
-export const Style = {
+const Style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    borderRadius: 2,
+    borderRadius: 4,
     boxShadow: 24,
     p: 3,
 };

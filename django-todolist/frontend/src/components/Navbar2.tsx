@@ -92,7 +92,7 @@ export default function PersistentDrawerLeft({ content }: {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                    Darvy's Trials
+                    Darvy's React Portal
                 </Typography>
                 </Toolbar>
             </AppBar>
