@@ -1,4 +1,4 @@
-function CreateEvent() {
+function Home() {
     return (
         <>
             <p> This is the Home page</p>
@@ -6,4 +6,4 @@ function CreateEvent() {
     );
 }
 
-export default CreateEvent;
+export default Home;
